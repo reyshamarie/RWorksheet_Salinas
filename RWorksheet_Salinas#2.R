@@ -261,7 +261,7 @@ cat("The average fuel expenditure of Mr. Cruz from Jan to June is:", fuel_averag
 #Create a vector data with 7 elements, containing the number of elements (length) in rivers, their sum (sum), mean (mean), median(median), variance(var), standard deviation(sd), minimum (min) and maximum (max).
 #data <- c(length(rivers), sum(rivers), mean(rivers), median(rivers), var(rivers),sd(rivers), min(rivers), max(rivers))
 # Load the rivers dataset
-data(rivers)
+data("rivers")
 
 # Create a vector "data" with statistics
 data <- c(length(rivers) , sum(rivers), mean(rivers), median(rivers), var(rivers), sd(rivers), min(rivers),max(rivers))
