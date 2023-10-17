@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
+```{r
 #1
 #Based on the above vector LETTERS:
 
@@ -283,5 +283,5 @@ knitr::opts_chunk$set(echo = TRUE)
 #a 3 4 5 1
 #b 3 4 5 1
 
-
+```
 
