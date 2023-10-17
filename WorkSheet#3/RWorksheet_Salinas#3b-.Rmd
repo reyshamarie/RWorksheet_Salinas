@@ -11,7 +11,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
+```{r name, echo = TRUE }
 #1
 #A. Create a data frame using the table below.
           
@@ -148,6 +148,7 @@ summary(household_data)
         write.csv(HouseholdData, file = "HouseholdData.csv")
 
 #A Import the csv file into the R environment. Write the codes.
+
         householddata <- read.csv("HouseholdData.csv")
         head(householddata)
 
@@ -220,4 +221,4 @@ summary(household_data)
         
         #The specific reasons for these sentiment changes would require additional context and analysis of the tweets.
          
-        
+```
