@@ -9,7 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r
+```{r name, echo = TRUE }
+
 #1
 #Based on the above vector LETTERS:
 
@@ -90,6 +91,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
         names(city_and_temp) <- c("City", "Temperature" )
         city_and_temp
+        
 #OUPUT/RESULT
 
                 #City Temperature
@@ -257,11 +259,11 @@ knitr::opts_chunk$set(echo = TRUE)
 #What will be the R codes and its output?
 
 
-    dimnames(array_data) <- list(
+    dimnames(array) <- list(
          row_names <- letters[1:2],
         col_names <- LETTERS[1:4], c("1st-Dimensional Array", "2nd-Dimensional Array", "3rd-Dimensional Array"))
  
-      array_data 
+      array 
  
  
 #OUPUT 
