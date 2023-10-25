@@ -1,0 +1,47 @@
+---
+title: "RWorksheet_lastname#4a"
+author: "Reysha Marie S. Salinas"
+date: "2023-10-25"
+output: html_document
+---
+
+```{r name, echo = TRUE }
+#1. The table below shows the data about shoe size and height. Create a data frame.
+
+shoe_size <- c(6.5, 9.0, 8.5, 8.5, 10.5, 7.0, 9.5, 9.0, 13.0, 7.5, 10.5, 8.5, 12.0, 10.5, 13.0, 11.5, 8.5, 5.0, 10.0, 6.5, 7.5, 8.5, 10.5, 8.5 ,10.5, 11.0, 9.0, 13.0)
+
+height <- c(66.0, 68.0, 64.5, 65.0, 70.0, 64.0, 70.0, 71.0, 72.0, 64.0, 74.5, 67.0, 71.0, 71.0, 77.0, 72.0, 59.0, 62.0, 72.0, 66.0, 64.0, 67.0, 73.0, 69.0, 72.0, 70.0,69.0,70.0)
+
+gender <- c("F","F","F","F","M","F","F","F","M","F","M","F","M","M","M","M","F","F","M","F","F","M","M","F","M","M","M","M")
+
+# Create a data frame
+data <- data.frame(ShoeSize = shoe_size, Height = height, Gender = gender)
+
+#a. Describe the data. 
+summary(data)
+
+#b. Create a subset by males and females with their corresponding shoe size and height.
+#What its result? Show the R scripts. 
+
+males <- data[data$Gender == "M", c("Gender","ShoeSize", "Height")]
+females <- data[data$Gender == "F", c("Gender", "ShoeSize", "Height")]
+
+males
+females
+
+
+
+#c. Find the mean of shoe size and height of the respondents. Write the R scripts and it result.
+mean_shoe_size <- mean(data$ShoeSize)
+mean_height <- mean(data$Height)
+
+mean_shoe_size
+mean_height
+
+#d. Is there a relationship between shoe size and height? Why?
+#No, In my opinion it doesn't affect shoe size to height and vice versa in growing up. 
+correlation <- cor(data$ShoeSize, data$Height)
+correlation 
+
+
+```
