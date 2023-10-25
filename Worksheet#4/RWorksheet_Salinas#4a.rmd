@@ -2,7 +2,9 @@
 title: "RWorksheet_lastname#4a"
 author: "Reysha Marie S. Salinas"
 date: "2023-10-25"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r name, echo = TRUE }
