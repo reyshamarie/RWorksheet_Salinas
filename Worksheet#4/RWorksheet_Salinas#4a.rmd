@@ -1,10 +1,9 @@
 ---
-title: "RWorksheet_lastname#4a"
+title: "RWorksheet_Salinas#4a"
 author: "Reysha Marie S. Salinas"
 date: "2023-10-25"
 output:
   pdf_document: default
-  html_document: default
 ---
 
 ```{r name, echo = TRUE }
@@ -39,7 +38,7 @@ mean_shoe_size
 mean_height
 
 #d. Is there a relationship between shoe size and height? Why?
-#No, In my opinion it doesn't affect shoe size to height and vice versa in growing up. 
+#No, Both shoe size and height can change over a person's lifetime. 
 correlation <- cor(data$ShoeSize, data$Height)
 correlation 
 
@@ -64,9 +63,12 @@ months <- c(
 #3 summary 
     
     # character vector
+    #for numerical analysis
     summary(months)
     
+    
     # the factor
+    # for categorical analysis
     summary(factor_months_vector)
     
 #4 Create a vector and factor
@@ -77,32 +79,152 @@ months <- c(
     factor_data <- factor(direction_vector, levels = c("east", "west", "north"),  c(1, 4, 3))
     print(factor_data) 
     
-#5  A.  
+#5  A Import the excel
     
      library(readr)
      import_march <- read_csv("import_march.csv")
    
-#5  B. 
-     View(import_march)
+#5  B.View the dataset
+     head(import_march)
     
-#6 
-    selected_number <- sample(1:50, 1)
+#6 Full Search
+   num <- readline(prompt= "Enter number from 1 to 50:") 
     
-   
-    paste("Chosen Number:", selected_number, "\n")
-  
-    if (selected_number < 1 || selected_number > 50) {
-      cat("The number selected is beyond the range of 1 to 50\n")
+    paste("Your entered number is ", num)
+    
+    if(num == 50) {
+      paste("The number you selected is beyond the range of 1 to 50")
+    } else if (num <= 50){
+      paste("TRUE")
     } else {
-    
-      if (selected_number == 20) {
-        cat("TRUE\n")
-      } else {
-        cat(selected_number, "\n")
-      }
+      paste(num)
     }
+#7 Change
+     minimum <- function (price) {
+    
+    bill <- price%/% 50 
+    paste("The  minimum number of bills:", bill)
+    }
+     snackprice <- 250
+     minimum(snackprice) 
+     
+#8 A. Create a dataframe
+  
+     name <- c("Annie", "Thea", "Steve", "Hanna")
+     grade1 <- c(85, 65, 75, 95)
+     grade2 <- c(65, 75, 55, 75)
+     grade3 <- c(85, 90, 80, 100)
+     grade4 <- c(100, 90, 85, 90)
+     
+     mathgrades <- data.frame(name, grade1, grade2, grade3, grade4)
+     print(mathgrades) 
+     
+#8 B. the average score of students whose average math score over 90 points during the semester.
+    
+     mathgrades <- data.frame(
+       name = c("Annie", "Thea", "Steve", "Hanna"),
+       grade1 = c(85, 65, 75, 95),
+       grade2 = c(65, 75, 55, 75),
+       grade3 = c(85, 90, 80, 100),
+       grade4 = c(100, 90, 85, 90)
+     )
+     
+     print(mathgrades)
+     
+     
+     mathgrades$average <- (mathgrades$grade1 + mathgrades$grade2 + mathgrades$grade3 + mathgrades$grade4) / 4
+     
+     top <- mathgrades[mathgrades$average >= 90,]
+     top
+     
+     if (nrow(top) > 0) {
+       paste(top$name, "'s average grade this semester is", top$average)
+     } else {
+       paste("No students have an average math score over 90.")
+     }
 
-#7 
+#8 C. the average score was less than 80 out of 4 tests.
+     
+     test1 <- sum(mathgrades$grade1) / nrow(mathgrades)
+     test1 
+     
+     test2 <- sum(mathgrades$grade2) / nrow(mathgrades)
+     test2 
+     
+     test3 <- sum(mathgrades$grade3) / nrow(mathgrades)
+     test3 
+     
+     test4 <- sum(mathgrades$grade4) / nrow(mathgrades)
+     test4
+     
+      if (test1 < 80) {
+       paste("The 1st test was difficult")
+     } else if (test2 < 80) {
+       paste("The 2nd test was difficult")
+     } else if (test3 < 80) {
+       paste("The 3rd test was difficult")
+     } else if (test4 < 80) {
+       paste("The 4th test was difficult")
+     } else {
+       paste("No test had an average grade less than 80")
+     } 
+     
+#8 D.students whose highest score for a semester exceeds 90 points.    
+     # annie scores
+if (mathgrades[1,2] > mathgrades[1,3] && mathgrades[1,2] > mathgrades[1,4] && mathgrades[1,2] > mathgrades[1,5]) {
+  annie <- mathgrades[1,2]
+} else if (mathgrades[1,3] > mathgrades[1,4] && mathgrades[1,3] > mathgrades[1,5]) {
+  annie <- mathgrades[1,3]
+} else if (mathgrades[1,4] > mathgrades[1,5] && mathgrades[1,2] > mathgrades[1,5]) {
+  annie <- mathgrades[1,4]
+} else {
+  annie <- mathgrades[1,5]
+}
 
 
+# thea scores
+if (mathgrades[2,2] > mathgrades[2,3] && mathgrades[2,2] > mathgrades[2,4] && mathgrades[2,2] > mathgrades[2,5]) {
+  thea <- mathgrades[2,2]
+} else if (mathgrades[2,3] > mathgrades[2,4] && mathgrades[2,3] > mathgrades[2,5]) {
+  thea <- mathgrades[2,3]
+} else if (mathgrades[2,4] > mathgrades[2,5] && mathgrades[2,2] > mathgrades[2,5]) {
+  thea <- mathgrades[2,4]
+} else {
+  thea <- mathgrades[2,5]
+}
+
+# steve scores
+if (mathgrades[3,2] > mathgrades[3,3] && mathgrades[3,2] > mathgrades[3,4] && mathgrades[3,2] > mathgrades[3,5]) {
+  steve <- mathgrades[3,2]
+} else if (mathgrades[3,3] > mathgrades[3,4] && mathgrades[3,3] > mathgrades[3,5]) {
+  steve <- mathgrades[3,3]
+} else if (mathgrades[3,4] > mathgrades[3,5] && mathgrades[3,2] > mathgrades[3,5]) {
+  steve <- mathgrades[3,4]
+} else {
+  steve <- mathgrades[3,5]
+}
+
+# hanna scores
+if (mathgrades[4,2] > mathgrades[4,3] && mathgrades[4,2] > mathgrades[4,4] && mathgrades[4,2] > mathgrades[4,5]) {
+  hanna <- mathgrades[4,2]
+} else if (mathgrades[4,3] > mathgrades[4,4] && mathgrades[4,3] > mathgrades[4,5]) {
+  hanna <- mathgrades[4,3]
+} else if (mathgrades[4,4] > mathgrades[4,5] && mathgrades[4,2] > mathgrades[4,5]) {
+  hanna <- mathgrades[4,4]
+} else {
+  hanna <- mathgrades[4,5]
+}
+
+mathgrades$highest <- c(annie, thea, steve, hanna)
+
+
+abovegradeof90 <- mathgrades[mathgrades$highest >= 90,]
+
+
+if (nrow(abovegradeof90) > 0) {
+  paste(abovegradeof90$name, "'s highest grade this semester is", abovegradeof90$highest)
+} else {
+  paste("No students have an average math score over 90.")
+}
+     
 ```
