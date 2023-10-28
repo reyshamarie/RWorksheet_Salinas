@@ -81,11 +81,11 @@ months <- c(
     
 #5  A Import the excel
     
-     library(readr)
-     import_march <- read_csv("import_march.csv")
+     imported <- read.table(file = "/cloud/project/Worksheet#4/import_march.csv", header = TRUE, sep = ",")
+     
    
 #5  B.View the dataset
-     head(import_march)
+     imported
     
 #6 Full Search
    num <- readline(prompt= "Enter number from 1 to 50:") 
