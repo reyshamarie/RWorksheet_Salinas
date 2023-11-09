@@ -9,46 +9,130 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#1. 
+1.  Using the for loop, create an R script that will display a 5x5 matrix as shown in
+Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
 
 ```{r} 
 
 vectorA <- c(1,2,3,4,5)
 
-matrixA <- matrix(0, nrow = 5,  ncol = 5)
+matrixA <- matrix(c(0,0,0,0,0), nrow = 5,  ncol = 5)
 
 for (i in 1:5){
 for(k in 1:5){
 if (i == k){
-matrixA[i,k] <- vectorA[i]
-}
-}
+matrixA[i,k] <- vectorA[i] 
 } 
+}
+}
 abs(matrixA) 
 
-``` 
-#2. 
-```{r}
+```  
 
+2. Print the string "*" using for() function. The output should be the same as shown
+in Figure 1.
+```{r name, echo = TRUE}
+for(i in 1:5) {
+  numb <- rep("*", i)
+  print(numb)
+}
 ```
-#3. Fibonacci
+
+
+3. Get an input from the user to print the Fibonacci sequence starting from the 1st input
+up to 500. Use repeat and break statements. Write the R Scripts and its output. 
+
 ```{r}
-num <- readline(prompt = "Enter a number from 1 to 500: ")
-num <- as.integer(num)
+ 
+
+userInput <- as.integer(readline("Enter starting number for Fibonacci sequence: "))
+
+x <- userInput
+y <- 0
+
+
+cat("Fibonacci sequence starting from", userInput, ":\n")
+
+repeat {
   
-    for (i in 1:num) 
-       if (i < 1 || i > 500) {
-    print("Invalid input!")
+  next_num <- x + y
+  
+  if (next_num > 500){
     break
- }
- fibonacci <- (((1 + sqrt(5)) / 2) ^ i) - (((1 - sqrt(5)) / 2) ^ i)
- print(paste("Fibonacci(", i, ") = ", round(fibonacci, 0)))
-} 
+  }
+  cat(next_num, " ")
+  x <- y
+  y <- next_num
+  
 }
 
+```
+
+4  Import the dataset as shown in Figure 1 you have created previously.
+
+4. A  What is the R script for importing an excel or a csv file? Display the first 6 rows of the dataset? Show your codes and its result. 
+```{r}
+imprt <- read.csv("Household.csv")
+head(imprt)
 ``` 
 
-#4. 
+
+4. B Create a subset for gender(female and male). How many observations are there in
+Male? How about in Female? Write the R scripts and its output.
+
 ```{r}
-#create a
+males <- prevData[prevData$Gender == "M",]
+males
+
+females <- prevData[prevData$Gender == "F",]
+females
+
+numofMale <- nrow(males)
+numofMale
+
+numofFem <- nrow(females)
+numofFem
+``` 
+
+4. C Create a graph for the number of males and females for Household Data. Use plot(),
+chart type = barplot. Make sure to place title, legends, and colors. Write the R scripts and
+its result. 
+
+```{r}
+
+totalMaleFemale <- table(prevData$Gender)
+barplot(totalMaleFemale,
+        main = "Number of Males and Females",
+        xlab = "Gender",
+        ylab = "Count",
+        col = c("black", "violet"),
+        legend.text = rownames(totalMaleFemale),
+        beside = TRUE)
 ```
+
+5. The monthly income of Dela Cruz family was spent on the following: 
+
+5. A Create a piechart that will include labels in percentage.Add some colors and title of
+the chart. Write the R scripts and show its output. 
+
+```{r}
+spending<- data.frame(
+  Category = c("Food", "Electricity", "Savings", "Miscellaneous"),
+  Value = c(60, 10, 5, 25)
+)
+
+spending$Percentage <- spending$Value / sum(spending$Value) * 100
+
+colors <- c("brown", "pink", "yellow", "violet")
+
+pie(spending$Value,
+    labels = paste(spending$Category, "(",spending$Percentage,"%)"),
+    col = colors,
+    main = "Monthly Income Spending of Dela Cruz Family")
+
+legend("topright", spending$Category, fill = colors)
+
+
+
+```
+
