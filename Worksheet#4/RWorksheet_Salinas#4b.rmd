@@ -81,18 +81,18 @@ head(imprt)
 Male? How about in Female? Write the R scripts and its output.
 
 ```{r}
-males <- prevData[prevData$Gender == "M",]
+males <- Household[Household$Gender == "M",]
 males
 
-females <- prevData[prevData$Gender == "F",]
+females <- Household[Household$Gender == "F",]
 females
 
-numofMale <- nrow(males)
-numofMale
+observationF <- nrow(females)
+observationM <- nrow(males)
 
-numofFem <- nrow(females)
-numofFem
-``` 
+observationF 
+observationM
+```  
 
 4. C Create a graph for the number of males and females for Household Data. Use plot(),
 chart type = barplot. Make sure to place title, legends, and colors. Write the R scripts and
@@ -100,14 +100,9 @@ its result.
 
 ```{r}
 
-totalMaleFemale <- table(prevData$Gender)
-barplot(totalMaleFemale,
-        main = "Number of Males and Females",
-        xlab = "Gender",
-        ylab = "Count",
-        col = c("black", "violet"),
-        legend.text = rownames(totalMaleFemale),
-        beside = TRUE)
+total <- table(Household$Gender)
+barplot(total,
+        main = "Number of Males and Females", xlab = "Gender", ylab = "Count", col = c("black", "violet"),  legend.text = rownames(total),beside = TRUE)
 ```
 
 5. The monthly income of Dela Cruz family was spent on the following: 
@@ -116,23 +111,26 @@ barplot(totalMaleFemale,
 the chart. Write the R scripts and show its output. 
 
 ```{r}
-spending<- data.frame(
+spend <- data.frame(
   Category = c("Food", "Electricity", "Savings", "Miscellaneous"),
   Value = c(60, 10, 5, 25)
 )
 
-spending$Percentage <- spending$Value / sum(spending$Value) * 100
-
+spend$Percentage <- spend$Value / sum(spend$Value) * 100
 colors <- c("brown", "pink", "yellow", "violet")
 
-pie(spending$Value,
-    labels = paste(spending$Category, "(",spending$Percentage,"%)"),
-    col = colors,
-    main = "Monthly Income Spending of Dela Cruz Family")
+# Adjust the font size with the cex parameter
+pie(spend$Value,
+    labels = paste(spend$Category, " (", spend$Percentage, "%)"),
+    col = colors, 
+    main = "The Monthly Income Spending of Dela Cruz Family",
+    cex = 0.8) 
 
-legend("topright", spending$Category, fill = colors)
-
+legend("topleft", spend$Category, fill = colors)
 
 
 ```
 
+```{r} 
+
+```
