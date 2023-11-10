@@ -31,7 +31,7 @@ abs(matrixA)
 
 2. Print the string "*" using for() function. The output should be the same as shown
 in Figure 1.
-```{r name, echo = TRUE}
+```{r}
 for(i in 1:5) {
   numb <- rep("*", i)
   print(numb)
@@ -43,27 +43,26 @@ for(i in 1:5) {
 up to 500. Use repeat and break statements. Write the R Scripts and its output. 
 
 ```{r}
-
-
 start_num <- as.numeric(readline("Enter the starting number for the Fibonacci sequence: "))
 
-num1 <- 0
-num2 <- 1
+if (is.na(start_num)) {
+  cat("Please enter a valid numeric starting number.\n")
+} else {
+  num1 <- 0
+  num2 <- 1
 
-repeat {
-  if (num1 >= start_num && num1 <= 500) {
-    cat(num1, " ")
+  while (num2 <= 500) {
+    if (!is.na(start_num) && num2 >= start_num) {
+      cat(num2, " ")
+    }
+
+    fib_sum <- num1 + num2
+    num1 <- num2
+    num2 <- fib_sum
   }
-  fib_sum <- num1 + num2
-  num1 <- num2
-  num2 <- fib_sum
-  
-  if (num1 > 500) {
-    break
-  }
-  cat(\n)
+
+  cat("\n")
 }
-
 
 
 ```
@@ -73,7 +72,8 @@ repeat {
 4. A  What is the R script for importing an excel or a csv file? Display the first 6 rows of the dataset? Show your codes and its result. 
 ```{r}
 imprt <- read.csv("Household.csv")
-head(imprt)
+head(imprt) 
+
 ``` 
 
 
@@ -81,17 +81,25 @@ head(imprt)
 Male? How about in Female? Write the R scripts and its output.
 
 ```{r}
-males <- Household[Household$Gender == "M",]
-males
+library(readr)
+Household <- read_csv("Household.csv")
 
+# Filter the data based on Gender
+males <- Household[Household$Gender == "M",]
 females <- Household[Household$Gender == "F",]
+
+# Display the results
+males
 females
 
+# Calculate the number of observations for each gender
 observationF <- nrow(females)
 observationM <- nrow(males)
 
-observationF 
-observationM
+# Display the number of observations
+cat("Number of Female Observations:", observationF, "\n")
+cat("Number of Male Observations:", observationM, "\n")
+
 ```  
 
 4. C Create a graph for the number of males and females for Household Data. Use plot(),
@@ -102,7 +110,8 @@ its result.
 
 total <- table(Household$Gender)
 barplot(total,
-        main = "Number of Males and Females", xlab = "Gender", ylab = "Count", col = c("black", "violet"),  legend.text = rownames(total),beside = TRUE)
+        main = "Number of Males and Females", xlab = "Gender", ylab = "Count", col = c("black", "violet"))
+legend("right", legend = rownames(total), fill = c("black", "violet"))
 ```
 
 5. The monthly income of Dela Cruz family was spent on the following: 
@@ -123,8 +132,7 @@ colors <- c("brown", "pink", "yellow", "violet")
 pie(spend$Value,
     labels = paste(spend$Category, " (", spend$Percentage, "%)"),
     col = colors, 
-    main = "The Monthly Income Spending of Dela Cruz Family",
-    cex = 0.8) 
+    main = "The Monthly Income Spending of Dela Cruz Family",cex = 0.8) 
 
 legend("topleft", spend$Category, fill = colors)
 
@@ -224,7 +232,7 @@ scatterplot <- ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width, color = Speci
     y = "Sepal Width"
   ) +
   scale_color_manual(values = c("setosa" = "brown", "versicolor" = "pink", "virginica" = "violet")) +
-  scale_shape_manual(values = c("setosa" = 2, "versicolor" = 18, "virginica" = 9))
+  scale_shape_manual(values = c("setosa" = 2, "versicolor" = 10, "virginica" = 9))
 
 print(scatterplot)
 
@@ -233,18 +241,117 @@ print(scatterplot)
 
 F. Interpret the result.
 
+The plot shows a visual representation of the Sepal Length and Sepal Width for each Iris flower species. Each species is represented by a different color and shape.
 
+Setosa flowers are brown and have a cross-like shape.
+Versicolor flowers are pink and have a circle shape.
+Virginica flowers are violet and have a diamond shape.
+
+Tahis plot allows you to easily compare and differentiate between different species based on their sepal length and sepal width, offering a comprehensive and visually appealing representation of the data.
 
 7 
 ```{r}
+library(readxl)
 alexa_file <- read_excel("alexa_file.xlsx")
-View(alexa_file) 
+print(alexa_file)  
+write.csv(alexa_file, file = "/cloud/project/Worksheet#4/alexa_file_modified.csv", row.names = FALSE)
 ```
 
 A. Rename the white and black variants by using gsub() function.
 ```{r}
-alexa_file$variation <- gsub("Black Dot", "New Name", alexa_file$variation) 
-alexa_file$variation <- gsub("White Dot", "Reysha Marie", alexa_file$variation) 
+# Install and load the necessary packages
+# install.packages("readxl")
+# install.packages("magrittr")
+library(readxl)
+library(magrittr)
+library(stringr)
 
-knitr::include_graphics("alexa_file.xlsx")
+# Read the Excel file
+alexa_file <- read_excel("/cloud/project/Worksheet#4/alexa_file.xlsx")
+
+# Modify the 'variation' column using %>% and str_replace
+alexa_file$variation <- alexa_file$variation %>%
+  str_replace("Black Dot", "Salinas") %>%
+  str_replace("White Dot", "Reysha Marie")
+
+# Print the modified data frame
+print(alexa_file)
+
+# Read the modified CSV file
+alexa_file_modified <- read.csv("/cloud/project/Worksheet#4/alexa_file_modified.csv")
+
+
+knitr::include_graphics("/cloud/project/Worksheet#4/output.png")
+
+```
+
+B. Get the total number of each variations and save it into another object. Save the
+object as variations.RData. Write the R scripts. What is its result?
+
+```{r}
+# Install and load the necessary packages
+# install.packages("openxlsx")
+# install.packages("dplyr")
+library(openxlsx)
+library(dplyr)
+
+# Read the Excel file
+alexa_file <- read.xlsx("alexa_file.xlsx")
+
+# Perform the desired operations
+variations <- alexa_file %>%
+  dplyr::count(variation)
+variations <- variations %>%
+ dplyr::rename(total = n)
+
+# Save the results to an RData file
+save(variations, file = "variations.RData")
+
+# Print the results
+print(variations)
+
+
+```
+
+C. From the variations.RData, create a barplot(). Complete the details of the chart
+which include the title, color, labels of each bar.
+```{r} 
+load("variations.RData")
+
+barplot(height = variations$total,
+        names.arg = variations$variation,
+        col = "brown",
+        main = "Product Variations",
+        xlab = "Variation",
+        ylab = "Count")
+
+
+
+
+```
+
+```{r}
+# Load the required libraries
+library(ggplot2)
+library(magrittr)
+
+# Read the dataset and load it into a data frame
+df <- read.csv("alexa_file.xlsx")
+
+# Define a variable "Black" for the black variation and another variable "White" for the white variation
+Black <- df$Black
+White <- df$White
+
+# Create a barplot() for the black and white variations
+BlackWhiteBarplot <- ggplot(df, aes(x = "Variations", y = value, fill = name)) +
+ geom_bar(stat = "identity", position = position_dodge()) +
+ labs(title = "Black and White Variations",
+       x = "Variations",
+       y = "Count",
+       fill = "Variation") +
+ theme_minimal() +
+ theme(legend.position = "bottom") +
+ scale_fill_manual(values = c("black", "white"))
+
+
 ```
