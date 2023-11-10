@@ -253,105 +253,120 @@ Tahis plot allows you to easily compare and differentiate between different spec
 ```{r}
 library(readxl)
 alexa_file <- read_excel("alexa_file.xlsx")
-print(alexa_file)  
-write.csv(alexa_file, file = "/cloud/project/Worksheet#4/alexa_file_modified.csv", row.names = FALSE)
+alexa_file
+
 ```
 
-A. Rename the white and black variants by using gsub() function.
+7 A. Rename the white and black variants by using gsub() function.
 ```{r}
-# Install and load the necessary packages
-# install.packages("readxl")
-# install.packages("magrittr")
-library(readxl)
-library(magrittr)
-library(stringr)
+alexa_file$variation <- gsub("White Dot", "WhiteDot", alexa_file$variation)
+alexa_file$variation <- gsub("White Show", "WhiteShow", alexa_file$variation)
+alexa_file$variation <- gsub("White Plus", "WhitePlus", alexa_file$variation)
+alexa_file$variation <- gsub("White Spot", "WhiteSpot", alexa_file$variation)
 
-# Read the Excel file
-alexa_file <- read_excel("/cloud/project/Worksheet#4/alexa_file.xlsx")
+alexa_file$variation <- gsub("Black Dot", "BlacDot", alexa_file$variation)
+alexa_file$variation <- gsub("Black Show", "BlackShow", alexa_file$variation)
+alexa_file$variation <- gsub("Black Plus", "BlackPlus", alexa_file$variation)
+alexa_file$variation <- gsub("Black Spot", "BlackSpot", alexa_file$variation) 
 
-# Modify the 'variation' column using %>% and str_replace
-alexa_file$variation <- alexa_file$variation %>%
-  str_replace("Black Dot", "Salinas") %>%
-  str_replace("White Dot", "Reysha Marie")
-
-# Print the modified data frame
-print(alexa_file)
-
-# Read the modified CSV file
-alexa_file_modified <- read.csv("/cloud/project/Worksheet#4/alexa_file_modified.csv")
-
-
-knitr::include_graphics("/cloud/project/Worksheet#4/output.png")
-
+alexa_file
 ```
 
-B. Get the total number of each variations and save it into another object. Save the
+7 B. Get the total number of each variations and save it into another object. Save the
 object as variations.RData. Write the R scripts. What is its result?
 
 ```{r}
-# Install and load the necessary packages
-# install.packages("openxlsx")
-# install.packages("dplyr")
-library(openxlsx)
 library(dplyr)
-
-# Read the Excel file
-alexa_file <- read.xlsx("alexa_file.xlsx")
 
 # Perform the desired operations
 variations <- alexa_file %>%
-  dplyr::count(variation)
-variations <- variations %>%
- dplyr::rename(total = n)
+  count(alexa_file$variation)
 
-# Save the results to an RData file
+
+variations
 save(variations, file = "variations.RData")
 
-# Print the results
-print(variations)
 
 
 ```
 
-C. From the variations.RData, create a barplot(). Complete the details of the chart
+7 C. From the variations.RData, create a barplot(). Complete the details of the chart
 which include the title, color, labels of each bar.
 ```{r} 
+# Load the variations data
 load("variations.RData")
 
-barplot(height = variations$total,
-        names.arg = variations$variation,
-        col = "brown",
-        main = "Product Variations",
-        xlab = "Variation",
-        ylab = "Count")
+# Extract the variation names
+Vnames <- c(
+  "1. Black", "2. Black Dot", "3. Black Plus", "4. Black Show", 
+  "5. Black Spot", "6. Charcoal Fabric", "7. Configuration: Fire TV Stick",
+  "8.Heather Gray Fabric", "9.Oak Finish", "10. Sandstone Fabric",
+  "11. Walnut Finish", "12. White", "13. White Dot", "14. White Plus", "15. White Show", "16.White Spot"
+)
+
+# Barplot
+CompletePlot <- barplot(variations$n,
+  names.arg = 1:16,
+  col = 3:19,
+  main = "Product Variations",
+  xlab = "Number of Variation",
+  ylab = "Count",
+  las = 0.0,
+  cex.names = 0.5, 
+  space = 0.2
+)
+
+# Add legend
+legend("topright", legend = Vnames, fill = 1:16, title = "Variation Names", cex = 0.5)
 
 
+knitr::include_graphics("/cloud/project/Worksheet#4/VARIATIONdata.png")
+```
 
 
 ```
-
+7 D. Create a barplot() for the black and white variations. Plot it in 1 frame, side by
+side. Complete the details of the chart.
 ```{r}
 # Load the required libraries
 library(ggplot2)
 library(magrittr)
 
-# Read the dataset and load it into a data frame
-df <- read.csv("alexa_file.xlsx")
+# Assuming your data frame is named variations
+# Replace "alexa_file$variation" with the actual column name in your data frame
 
-# Define a variable "Black" for the black variation and another variable "White" for the white variation
-Black <- df$Black
-White <- df$White
+# Subset the data for Black variations
+Blackplot <- variations[variations$`alexa_file$variation` %in% c("Black", "BlackDot", "BlackShow", "BlackPlus", "BlackSpot"), ]
 
-# Create a barplot() for the black and white variations
-BlackWhiteBarplot <- ggplot(df, aes(x = "Variations", y = value, fill = name)) +
- geom_bar(stat = "identity", position = position_dodge()) +
- labs(title = "Black and White Variations",
-       x = "Variations",
-       y = "Count",
-       fill = "Variation") +
- theme_minimal() +
- theme(legend.position = "bottom") +
- scale_fill_manual(values = c("black", "white"))
+# Subset the data for White variations
+Whiteplot <- variations[variations$`alexa_file$variation` %in% c("White", "WhiteDot", "WhiteShow", "WhitePlus", "WhiteSpot"), ]
 
+#layout one frame
+par(mfrow = c(1, 2), mar = c(2, 2, 2, 2))
 
+# Barplot for Black variations
+Black <- barplot(height = Blackplot$n,
+                 names.arg = Blackplot$`alexa_file$variation`,
+                 col = "Black",
+                 main = "Black Variations",
+                 xlab = "Number of Variation",
+                 ylab = "Count",
+                 las = 0.0,
+                 cex.names = 0.4,
+                 space = 0.2
+)
+
+# Barplot for White variations
+White <- barplot(height = Whiteplot$n,
+                 names.arg = Whiteplot$`alexa_file$variation`,
+                 col = "White",
+                 main = "White Variations",
+                 xlab = "Number of Variation",
+                 ylab = "Count",
+                 las = 0.0,
+                 cex.names = 0.4,
+                 space = 0.2
+)
+mtext("The Black and White Variations", side = 3, line = 1, cex = 1.2)
+knitr::include_graphics("/cloud/project/Worksheet#4/BLACKandWHITE.png")
 ```
