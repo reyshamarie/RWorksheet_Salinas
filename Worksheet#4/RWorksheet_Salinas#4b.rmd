@@ -307,7 +307,7 @@ Vnames <- c(
 # Barplot
 CompletePlot <- barplot(variations$n,
   names.arg = 1:16,
-  col = 3:19,
+  col = 1:16,
   main = "Product Variations",
   xlab = "Number of Variation",
   ylab = "Count",
@@ -320,7 +320,7 @@ CompletePlot <- barplot(variations$n,
 legend("topright", legend = Vnames, fill = 1:16, title = "Variation Names", cex = 0.5)
 
 
-knitr::include_graphics("/cloud/project/Worksheet#4/VARIATIONdata.png")
+knitr::include_graphics("/cloud/project/Worksheet#4/FINALVARATIONDATA.png")
 ```
 
 
