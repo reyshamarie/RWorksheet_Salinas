@@ -177,7 +177,7 @@ value_of_means
 C.Create a pie chart for the Species distribution. Add title, legends, and colors. Write
 the R script and its result.
 ```{r}
-# Assuming 'iris' is the name of your dataset
+# Assuming that I have a flower called the 'iris' and it  is the name of my dataset
 species <- table(iris$Species)
 colors <- c("pink", "gray", "brown")
 
@@ -244,7 +244,7 @@ Setosa flowers are brown and have a cross-like shape.
 Versicolor flowers are pink and have a circle shape.
 Virginica flowers are violet and have a diamond shape.
 
-Tahis plot allows you to easily compare and differentiate between different species based on their sepal length and sepal width, offering a comprehensive and visually appealing representation of the data.
+This plot allows you to easily compare and differentiate between different species based on their sepal length and sepal width, offering a comprehensive and visually appealing representation of the data.
 
 7 
 ```{r}
@@ -256,6 +256,7 @@ alexa_file
 
 7 A. Rename the white and black variants by using gsub() function.
 ```{r}
+#Rename the variants
 alexa_file$variation <- gsub("White Dot", "WhiteDot", alexa_file$variation)
 alexa_file$variation <- gsub("White Show", "WhiteShow", alexa_file$variation)
 alexa_file$variation <- gsub("White Plus", "WhitePlus", alexa_file$variation)
@@ -329,8 +330,7 @@ side. Complete the details of the chart.
 library(ggplot2)
 library(magrittr)
 
-# Assuming your data frame is named variations
-# Replace "alexa_file$variation" with the actual column name in your data frame
+# Replace "alexa_file$variation" with the actual column name 
 
 # Subset the data for Black variations
 Blackplot <- variations[variations$`alexa_file$variation` %in% c("Black", "BlackDot", "BlackShow", "BlackPlus", "BlackSpot"), ]
