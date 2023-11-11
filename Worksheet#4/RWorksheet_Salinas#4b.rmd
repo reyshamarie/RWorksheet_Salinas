@@ -13,19 +13,16 @@ knitr::opts_chunk$set(echo = TRUE)
 Figure 1. It must contain vectorA = [1,2,3,4,5] and a 5 x 5 zero matrix.
 
 ```{r} 
+vectorA <- c(1, 2, 3, 4, 5)
 
-vectorA <- c(1,2,3,4,5)
+matrixA <- matrix(c(0, 0, 0, 0, 0), nrow = 5, ncol = 5)
 
-matrixA <- matrix(c(0,0,0,0,0), nrow = 5,  ncol = 5)
-
-for (i in 1:5){
-for(k in 1:5){
-if (i == k){
-matrixA[i,k] <- vectorA[i] 
-} 
+for (i in 1:5) {
+  matrixA[i,] <- abs(vectorA - vectorA[i])
 }
-}
-abs(matrixA) 
+
+print(matrixA)
+
 
 ```  
 
