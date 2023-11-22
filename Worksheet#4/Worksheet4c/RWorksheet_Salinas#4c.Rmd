@@ -1,0 +1,74 @@
+---
+title: "RWorksheet_Salinas#4c.Rmd."
+author: "Reysha Marie S. Salinas"
+date: "2023-11-22"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+1. a. Show your solutions on how to import a csv file into the environment.
+```{r}
+library(readr)
+mpg <- read_csv("mpg.csv")
+View(mpg)
+```
+
+
+1b. Which variables from mpg dataset are categorical?
+```{r}
+ctgr <- names(sapply(mpg, is.factor))
+print(ctgr)
+
+```
+
+1c. Which are continuous variables?
+```{r}
+conti <- names(sapply(mpg, is.numeric))
+print(conti)
+```
+
+
+2. Which manufacturer has the most models in this data set? Which model has the most variations?
+Show your answer.
+```{r}
+
+
+``` 
+
+
+
+2 a. Group the manufacturers and find the unique models. Show your codes and result.
+```{r}
+model <- unique(mpg[, c("manufacturer", "model")])
+count <- table(model$manufacturer) 
+print(count)
+```
+
+
+2 b. Graph the result by using plot() and ggplot(). Write the codes and its result.
+```{r}
+
+print(paste("Manufacturer with the most models:", model))
+
+barplot(count, main = "Number of Models by Manufacturer",
+        xlab = "Manufacturer", ylab = "Number of Models",
+        col = "pink", 
+        las = 2)
+
+ggplot(data = data.frame(manufacturer = names(count)),
+count = as.numeric(count))
+x = "Manufacturer"
+y = "Number of Models"
+
+```
+
+
+2. Same dataset will be used. You are going to show the relationship of the model and the manufacturer
+
+```{r}
+correlation[model$manufacturer] 
+
+```
