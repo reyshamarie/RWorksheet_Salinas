@@ -13,21 +13,24 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r}
 library(readr)
 mpg <- read_csv("mpg.csv")
-View(mpg)
+head(mpg)
+
+
 ```
 
 
 1b. Which variables from mpg dataset are categorical?
 ```{r}
-ctgr <- names(sapply(mpg, is.factor))
-print(ctgr)
+str(mpg) 
+
+#The categorical variables are the manufacturer,model, year,cyl,trans,drv,fl and class
 
 ```
 
 1c. Which are continuous variables?
-```{r}
-conti <- names(sapply(mpg, is.numeric))
-print(conti)
+```{r} 
+summary(mpg)
+#The continious variablesa are the , manufacturer, model, disply, year , cyl, cty ,hwy, fl, trans, drv and class 
 ```
 
 
@@ -35,40 +38,182 @@ print(conti)
 Show your answer.
 ```{r}
 
+model <- mpg %>%
+ group_by(manufacturer) %>%
+ summarise(count = n()) %>%
+ arrange(desc(count))
+
+print(model)
+
+#The manufacturer with the most models is dodge.
+
+count <- mpg %>%
+ group_by(model) %>%
+ summarise(variation = n()) %>%
+ arrange(desc(variation))
+
+print(count)
+#The model with most variation is caravan 2wd.
 
 ``` 
 
 
 
-2 a. Group the manufacturers and find the unique models. Show your codes and result.
+2.1 a. Group the manufacturers and find the unique models. Show your codes and result.
 ```{r}
-model <- unique(mpg[, c("manufacturer", "model")])
-count <- table(model$manufacturer) 
-print(count)
+library(dplyr)
+
+manumodel <- mpg %>%
+ group_by(manufacturer) %>%
+ summarise(unique_models = n_distinct(model)) 
+
+print(manumodel)
 ```
 
 
-2 b. Graph the result by using plot() and ggplot(). Write the codes and its result.
+2.1 b. Graph the result by using plot() and ggplot(). Write the codes and its result.
 ```{r}
 
-print(paste("Manufacturer with the most models:", model))
-
-barplot(count, main = "Number of Models by Manufacturer",
-        xlab = "Manufacturer", ylab = "Number of Models",
-        col = "pink", 
-        las = 2)
-
-ggplot(data = data.frame(manufacturer = names(count)),
-count = as.numeric(count))
-x = "Manufacturer"
-y = "Number of Models"
-
+plot(ggplot(manufacturers_models, aes(x = reorder(manufacturer, -unique_models), y = unique_models, fill = unique_models)) +
+ geom_bar(stat = "identity", width = 0.8) + 
+ labs(title = "Number of Manufacturer's Unique Models", 
+      x = "Manufacturer",
+      y = "Number of Unique Models") +
+   
+ theme_minimal() +
+ scale_fill_gradient(low = "black", high = "pink") +
+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))) 
 ```
 
 
 2. Same dataset will be used. You are going to show the relationship of the model and the manufacturer
-
+a. What does ggplot(mpg, aes(model, manufacturer)) + geom_point() show?
+```{r} 
+ ggplot(mpg, aes(model, manufacturer)) + geom_point() 
+#This generate a scatter plot showing the relationship between car models and their respective manufacturers  using points but the car models are not readable, leads to uninformative data.
+```
+b. For you, is it useful? If not, how could you modify the data to make it more informative?
 ```{r}
-correlation[model$manufacturer] 
+#No, The code given is just a basic structure. In modifying this to make it informative I will add color for that will differentiate points based on different variables then a legend to guide viewer to avoid confusion, and adjust the size of variable names with its angle to make it more readable. 
 
+#like this code
+ggplot(mpg, aes(x = model, y = manufacturer, color = class)) + 
+  geom_point() +
+  labs(title = "Car Models and Manufacturers",
+       cex = 3,
+       x = "Car Model",
+       y = "Manufacturer",
+       color = "Vehicle Class") +
+  theme_minimal() +
+  theme(legend.position = "right", axis.text.x = element_text(angle = 90, hjust = 1),
+  plot.title = element_text(hjust  = 0.5))
+``` 
+
+3.
+```{r}
+library(ggplot2)
+library(dplyr)
+
+data(mpg)
+top_20 <- mpg %>% slice_head(n = 20)
+
+ggplot(top_20, aes(x = year, y = model)) + 
+  geom_point()  +
+  labs(title = "Relationship between Model and Year",
+       x = "Year",
+       y = "Model")
+
+```
+
+4. Using the pipe (%>%), group the model and get the number of cars per model. Show codes and its result
+```{r}
+
+```
+
+a. Plot using geom_bar() using the top 20 observations only. The graphs shoudl have a title, labels and
+colors. Show code and results.
+```{r}
+
+summary_data <- mpg %>%
+  group_by(model) %>%
+  summarise(total_cars = sum(cars_count)) %>%
+  arrange(desc(total_cars))  #
+top_20 <- summary_data %>% slice(1:20)
+
+
+ggplot(top_20, aes(x = reorder(model, total_cars), y = total_cars, fill = model)) +
+  geom_bar(stat = "identity") +
+  labs(
+    title = "Top 20 Car Models by Count",
+    x = "Car Models",
+    y = "Total Cars"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotating x-axis labels
+```
+b. Plot using the geom_bar() + coord_flip() just like what is shown below. Show codes and its result.
+```{r}
+
+```
+
+5. Plot the relationship between cyl - number of cylinders and displ - engine displacement using
+geom_point with aesthetic color = engine displacement. Title should be “Relationship between
+No. of Cylinders and Engine Displacement”.
+```{r}
+```
+a. How would you describe its relationship? Show the codes and its result. 
+```{r}
+```
+6. Plot the relationship between displ (engine displacement) and hwy(highway miles per gallon). Mapped
+it with a continuous variable you have identified in #1-c. What is its result? Why it produced such
+output?
+```{r}
+```
+
+6. Import the traffic.csv onto your R environment.
+```{r}
+traffic <- read_csv("traffic.csv")
+head(traffic)
+```
+
+a. How many numbers of observation does it have? What are the variables of the traffic dataset the Show
+your answer.
+```{r}
+summary(traffic)
+```
+
+b. subset the traffic dataset into junctions. What is the R codes and its output?
+```{r}
+juncset <- subset[traffic$Junction==]
+juncset
+```
+
+c. Plot each junction in a using geom_line(). Show your solution and output.
+```{r}
+```
+
+7. From alexa_file.xlsx, import it to your environment
+```{r}
+library(readxl)
+alexa_file <- read_excel("alexa_file.xlsx")
+head(alexa_file)
+```
+a. How many observations does alexa_file has? What about the number of columns? Show your solution
+and answer.
+```{r}
+str(alexa_file)
+
+#The number of observations is 3,150 and The number of columns is 5. 
+```
+b. group the variations and get the total of each variations. Use dplyr package. Show solution and
+answer.
+```{r}
+```
+d. Plot a geom_line() with the date and the number of verified reviews. Complete the details of the
+graphs. Show your answer and solution.
+```{r}
+```
+e. Get the relationship of variations and ratings. Which variations got the most highest in rating? Plot a
+graph to show its relationship. Show your solution and answer.
+```{r}
 ```
