@@ -268,3 +268,8 @@ data("abalone")
 head(abalone)
 summary(abalone)
 
+
+library(openxlsx)  
+
+write.xlsx(abalone, file = "abalone.xlsx") 
+
