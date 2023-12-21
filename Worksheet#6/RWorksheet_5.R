@@ -21,17 +21,40 @@ Student_Score
 
 
 library(Hmisc)
-
-#RESULT
 summary(Student_Score)
+#RESULT
+##   Student         Pre_Test       Post_Test    
+#Min.   : 1.00   Min.   :47.00   Min.   :56.00  
+#1st Qu.: 3.25   1st Qu.:54.00   1st Qu.:56.75  
+#Median : 5.50   Median :56.00   Median :60.50  
+#Mean   : 5.50   Mean   :55.70   Mean   :59.70  
+#3rd Qu.: 7.75   3rd Qu.:57.75   3rd Qu.:61.75  
+#Max.   :10.00   Max.   :63.00   Max.   :63.00 
+
 
 
 
 library(pastecs)
-
-#RESULT
 stat.desc(Student_Score)
 
+#RESULT
+
+
+#Student     Pre_Test    Post_Test
+#nbr.val      10.0000000  10.00000000  10.00000000
+#nbr.null      0.0000000   0.00000000   0.00000000
+#nbr.na        0.0000000   0.00000000   0.00000000
+#min           1.0000000  47.00000000  56.00000000
+#max          10.0000000  63.00000000  63.00000000
+#range         9.0000000  16.00000000   7.00000000
+#sum          55.0000000 557.00000000 597.00000000
+#median        5.5000000  56.00000000  60.50000000
+#mean          5.5000000  55.70000000  59.70000000
+#SE.mean       0.9574271   1.46855938   0.89504811
+#CI.mean.0.95  2.1658506   3.32211213   2.02473948
+#var           9.1666667  21.56666667   8.01111111
+#std.dev       3.0276504   4.64399254   2.83039063
+#coef.var      0.5504819   0.08337509   0.04741023
 
 
 #2. 
@@ -102,6 +125,9 @@ incmeans
 
 #b. Copy the results and interpret.
 
+#act      nsw       nt      qld       sa      tas      vic       wa 
+#44.50000 57.33333 55.50000 53.60000 55.00000 60.50000 56.00000 52.25000
+
 #The median income values across different states and territories in Australia are as follows: 
 #In the ACT, the median income is $44,500, while in  NSW accountants have a median income of
 #$57,333.33. In the NT, the median income is $55,500, and in QLD, accountants have a median income 
@@ -165,6 +191,12 @@ cat("Number of Adults who did not survive:", sum(no_survived_adult), "\n")
 cat("Number of Children who did not survive:", sum(no_survived_child), "\n")
 cat("Number of Adults who survived:", sum(yes_survived_adult), "\n")
 cat("Number of Children who survived:", sum(yes_survived_child), "\n")
+
+#RESULT
+#Number of Adults who did not survive: 1438 
+#Number of Children who did not survive: 52 
+#Number of Adults who survived: 654 
+#Number of Children who survived: 57
 
 
 #8. The data sets are about the breast cancer Wisconsin. The samples arrive periodically
